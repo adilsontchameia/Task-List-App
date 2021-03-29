@@ -31,6 +31,9 @@ class _HomeState extends State<Home> {
     return File("${diretorio.path}/dados.json");
   }
 
+  //Guardar ultimo item removido para desfazer acao no snack
+  Map<String, dynamic> _ultimaTarefaRemovido = Map();
+
 //Salvar tarefa pelo alert
   _salvarTarefa() {
     String textoDigitado = _controllerTarefa.text;
@@ -91,14 +94,21 @@ class _HomeState extends State<Home> {
       //Para apagar
       onDismissed: (direction) {
         //Recuperar o ultmo item excluido
-
+        _ultimaTarefaRemovido = _tarefas[index];
         //Remover conforme o indice
         _tarefas.removeAt(index);
         //_salvarArquivos();
 
         //SnackBar
         final snackbar = SnackBar(
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 5),
           content: Text("Tarefa Removida Com Sucesso !"),
+          action: SnackBarAction(
+            label: "Recuperar",
+            textColor: Colors.white,
+            onPressed: () {},
+          ),
         );
         Scaffold.of(context).showSnackBar(snackbar);
       },
