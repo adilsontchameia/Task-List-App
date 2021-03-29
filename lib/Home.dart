@@ -31,22 +31,27 @@ class _HomeState extends State<Home> {
         title: Text("Task App"),
         backgroundColor: Colors.orange,
       ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: ListView.builder(
-            itemBuilder: (context, indice) {
-              //Retorna numa listTitle
-              return ListTile(
-                title: Text(_tarefas[indice]["titulo"]),
-              );
-            },
-            itemCount: _tarefas.length),
-      ),
       //FloatingActionButton
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Colors.orange,
         onPressed: () {},
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              child: ListView.builder(
+                  itemBuilder: (context, indice) {
+                    //Retorna numa listTitle
+                    return ListTile(
+                      title: Text(_tarefas[indice]["titulo"]),
+                    );
+                  },
+                  itemCount: _tarefas.length),
+            ),
+          ),
+        ],
       ),
     );
   }
