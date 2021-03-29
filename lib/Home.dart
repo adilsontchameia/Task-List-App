@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+//Importando o path privider
+import 'package:path_provider/path_provider.dart';
+//Processamento dentro do dispositivo do usuario
+import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
 
 class Home extends StatefulWidget {
   @override
@@ -7,12 +13,34 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   //Iniciado lista estatica
-  List _tarefas = ["Estudar Flutter", "Estudar Node.js", "Estudar Java"];
+  //List _tarefas = ["Estudar Flutter", "Estudar Node.js", "Estudar Java"];
+  List _tarefas = [];
+  //Metodos para salvar, nos sistemas de arquivos
+  //Os caminhos para salvar no ios ou android, o caminho e diferente
+  //Iremos usar uma biblioteca(pluguin) que definira isso automaticamente(PathProvider);
+  //Esse metodo de salvamento nao e o SQLFLITE
+  //Tem que ser ansicrona, porque nao se sabe quanto demorara para efetuar a consulta
+  salvarArquivos() async {
+    //Local que queremos salvar
+    final diretorio = await getApplicationDocumentsDirectory();
+    //Definir o nome do diretorio
+    var arquivo = File("{$diretorio.path}/taskList.json");
+    //Criando os Dados
+    Map<String, dynamic> tarefa = Map();
+    tarefa["titulo"] = "Ir ao Mercado";
+    //Booleano para verificarmos se concluimos
+    tarefa["realizada"] = false;
+    //Convertendo a lista em json
+    String dados = json.encode(_tarefas);
+    //Definir o que salvar
+    arquivo.writeAsStringSync(dados);
+    //print("Caminho: " + diretorio.path);
+  }
 
   @override
   Widget build(BuildContext context) {
     //Iniciando a lista a iniciar o app
-    //_carregarTarefas();
+    salvarArquivos();
     return Scaffold(
       //AppBar
       appBar: AppBar(
@@ -39,12 +67,19 @@ class _HomeState extends State<Home> {
                 //Acao
                 actions: [
                   TextButton(
-                    onPressed: () {},
-                    child: Text("Cancela"),
+                    //Fechar o alertDialog
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Cancela",
+                      style: TextStyle(color: Colors.orange),
+                    ),
                   ),
                   TextButton(
-                    onPressed: () {},
-                    child: Text("Salvar"),
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Salvar",
+                      style: TextStyle(color: Colors.orange),
+                    ),
                   ),
                 ],
               );
