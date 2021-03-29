@@ -20,27 +20,35 @@ class _HomeState extends State<Home> {
   //Iremos usar uma biblioteca(pluguin) que definira isso automaticamente(PathProvider);
   //Esse metodo de salvamento nao e o SQLFLITE
   //Tem que ser ansicrona, porque nao se sabe quanto demorara para efetuar a consulta
-  salvarArquivos() async {
-    //Local que queremos salvar
+
+  //Metodo para nos retornar o File
+  _getFile() async {
+    //Local que queremos salvar, recuperar, remover
     final diretorio = await getApplicationDocumentsDirectory();
     //Definir o nome do diretorio
-    var arquivo = File("{$diretorio.path}/taskList.json");
+    return File("${diretorio.path}/dados.json");
+  }
+
+  _salvarArquivos() async {
+    //Local que queremos salvar
+    var arquivo = await _getFile();
     //Criando os Dados
     Map<String, dynamic> tarefa = Map();
     tarefa["titulo"] = "Ir ao Mercado";
     //Booleano para verificarmos se concluimos
     tarefa["realizada"] = false;
+    _tarefas.add(tarefa);
     //Convertendo a lista em json
     String dados = json.encode(_tarefas);
     //Definir o que salvar
-    arquivo.writeAsStringSync(dados);
-    //print("Caminho: " + diretorio.path);
+    arquivo.writeAsString(dados);
+    print("Caminho: " + dados);
   }
 
   @override
   Widget build(BuildContext context) {
     //Iniciando a lista a iniciar o app
-    salvarArquivos();
+    _salvarArquivos();
     return Scaffold(
       //AppBar
       appBar: AppBar(
