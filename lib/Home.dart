@@ -36,7 +36,17 @@ class _HomeState extends State<Home> {
                   decoration: InputDecoration(labelText: "Digite uma tarefa"),
                   onChanged: (text) {},
                 ),
-
+                //Acao
+                actions: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text("Cancela"),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text("Salvar"),
+                  ),
+                ],
               );
             },
           );
