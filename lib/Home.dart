@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
     final item = _tarefas[index]["titulo"];
     return Dismissible(
       key: Key(item),
-      direction: DismissDirection.up,
+      direction: DismissDirection.endToStart,
       //Para apagar
       onDismissed: (direction) {
         //Remover conforme o indice
