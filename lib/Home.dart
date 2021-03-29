@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
   //Esse metodo de salvamento nao e o SQLFLITE
   //Tem que ser ansicrona, porque nao se sabe quanto demorara para efetuar a consulta
 
+  TextEditingController _controllerTarefa = TextEditingController();
   //Metodo para nos retornar o File
   //Vai ser retornado no futuro
   Future<File> _getFile() async {
@@ -30,15 +31,20 @@ class _HomeState extends State<Home> {
     return File("${diretorio.path}/dados.json");
   }
 
-  _salvarArquivos() async {
-    //Local que queremos salvar
-    var arquivo = await _getFile();
+//Salvar tarefa pelo alert
+  _salvarTarefa() {
+    String textoDigitado = _controllerTarefa.text;
     //Criando os Dados
     Map<String, dynamic> tarefa = Map();
-    tarefa["titulo"] = "Ir ao Mercado";
+    tarefa["titulo"] = textoDigitado;
     //Booleano para verificarmos se concluimos
     tarefa["realizada"] = false;
     _tarefas.add(tarefa);
+  }
+
+  _salvarArquivos() async {
+    //Local que queremos salvar
+    var arquivo = await _getFile();
     //Convertendo a lista em json
     String dados = json.encode(_tarefas);
     //Definir o que salvar
@@ -94,6 +100,8 @@ class _HomeState extends State<Home> {
                 title: Text("Adicionar Tarefa"),
                 //Mostrar um textField
                 content: TextField(
+                  //Pegar o que foi digitado
+                  controller: _controllerTarefa,
                   decoration: InputDecoration(labelText: "Digite uma tarefa"),
                   onChanged: (text) {},
                 ),
