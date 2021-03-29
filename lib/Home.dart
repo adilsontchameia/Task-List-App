@@ -42,6 +42,12 @@ class _HomeState extends State<Home> {
             },
             itemCount: _tarefas.length),
       ),
+      //FloatingActionButton
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.orange,
+        onPressed: () {},
+      ),
     );
   }
 }
