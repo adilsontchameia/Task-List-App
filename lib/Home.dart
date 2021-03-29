@@ -145,9 +145,14 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) {
                     return CheckboxListTile(
                       title: Text(_tarefas[index]["titulo"]),
-                      value: false, //estado do checkbox
+                      value: _tarefas[index]["realizada"], //estado do checkbox
                       onChanged: (valorAlterado) {
-                        print("Status: " + valorAlterado.toString());
+                        //print("Status: " + valorAlterado.toString());
+                        //Atualizar estado do checkbox
+                        setState(() {
+                          _tarefas[index]["realizada"] = valorAlterado;
+                          _salvarArquivos();
+                        });
                       },
                     );
 
