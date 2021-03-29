@@ -6,25 +6,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //Iniciado lista vazia
-  List _tarefas = [];
-  //Carregar a lista na View
-  void _carregarTarefas() {
-    _tarefas = [];
-    //Criado um laco de repeticao para encher a lista na view
-    for (int i = 0; i <= 2; i++) {
-      //Criacao de um Map de strings e dynamics
-      Map<String, dynamic> itens = Map();
-      itens["titulo"] = "Adilson $i";
-      //Adicionando Item a lista
-      _tarefas.add(itens);
-    }
-  }
+  //Iniciado lista estatica
+  List _tarefas = ["Estudar Flutter", "Estudar Node.js", "Estudar Java"];
 
   @override
   Widget build(BuildContext context) {
     //Iniciando a lista a iniciar o app
-    _carregarTarefas();
+    //_carregarTarefas();
     return Scaffold(
       //AppBar
       appBar: AppBar(
@@ -35,17 +23,34 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Colors.orange,
-        onPressed: () {},
+        onPressed: () {
+          //Retornar um alertDialog
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                //Titulo
+                title: Text("Adicionar Tarefa"),
+                //Mostrar um textField
+                content: TextField(
+                  decoration: InputDecoration(labelText: "Digite uma tarefa"),
+                  onChanged: (text) {},
+                ),
+
+              );
+            },
+          );
+        },
       ),
       body: Column(
         children: [
           Expanded(
             child: Container(
               child: ListView.builder(
-                  itemBuilder: (context, indice) {
+                  itemBuilder: (context, index) {
                     //Retorna numa listTitle
                     return ListTile(
-                      title: Text(_tarefas[indice]["titulo"]),
+                      title: Text(_tarefas[index]),
                     );
                   },
                   itemCount: _tarefas.length),
