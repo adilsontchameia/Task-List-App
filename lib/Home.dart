@@ -81,11 +81,32 @@ class _HomeState extends State<Home> {
     });
   }
 
+//Retornar a list
   Widget criarItemLista(context, index) {
     //Key - nome da tarefa
-    final item = _tarefas[index];
+    final item = _tarefas[index]["titulo"];
     return Dismissible(
       key: Key(item),
+      direction: DismissDirection.up,
+      //Para apagar
+      onDismissed: (direction) {
+        //Remover conforme o indice
+        _tarefas.removeAt(index);
+        _salvarArquivos();
+      },
+      background: Container(
+        color: Colors.red,
+        padding: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ),
       child: CheckboxListTile(
         title: Text(_tarefas[index]["titulo"]),
         value: _tarefas[index]["realizada"], //estado do checkbox
@@ -99,7 +120,6 @@ class _HomeState extends State<Home> {
         },
       ),
     );
-
     /*
  //Retorna numa listTitle
  return ListTile(
