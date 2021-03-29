@@ -87,9 +87,10 @@ class _HomeState extends State<Home> {
 //Retornar a list
   Widget criarItemLista(context, index) {
     //Key - nome da tarefa
-    final item = _tarefas[index]["titulo"];
+    //final item = _tarefas[index]["titulo"];
     return Dismissible(
-      key: Key(item),
+      //DateTime.now().millisecondsSinceEpoch.toString() = Gerando uma chave diferente ao remover o arquivo
+      key: Key(DateTime.now().millisecondsSinceEpoch.toString()),
       direction: DismissDirection.endToStart,
       //Para apagar
       onDismissed: (direction) {
@@ -102,12 +103,18 @@ class _HomeState extends State<Home> {
         //SnackBar
         final snackbar = SnackBar(
           backgroundColor: Colors.orange,
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 15),
           content: Text("Tarefa Removida Com Sucesso !"),
           action: SnackBarAction(
             label: "Recuperar",
             textColor: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                //Pegando o mesmo indice que se removeu
+                _tarefas.insert(index, _ultimaTarefaRemovido);
+              });
+              _salvarArquivos();
+            },
           ),
         );
         Scaffold.of(context).showSnackBar(snackbar);
@@ -150,7 +157,7 @@ title: Text(_tarefas[index]["titulo"]),
   Widget build(BuildContext context) {
     //Iniciando a lista a iniciar o app
     //_salvarArquivos();
-    print("Itens Salvos: " + _tarefas.toString());
+
     return Scaffold(
       //AppBar
       appBar: AppBar(
