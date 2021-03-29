@@ -90,9 +90,17 @@ class _HomeState extends State<Home> {
       direction: DismissDirection.endToStart,
       //Para apagar
       onDismissed: (direction) {
+        //Recuperar o ultmo item excluido
+
         //Remover conforme o indice
         _tarefas.removeAt(index);
-        _salvarArquivos();
+        //_salvarArquivos();
+
+        //SnackBar
+        final snackbar = SnackBar(
+          content: Text("Tarefa Removida Com Sucesso !"),
+        );
+        Scaffold.of(context).showSnackBar(snackbar);
       },
       background: Container(
         color: Colors.red,
