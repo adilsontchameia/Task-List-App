@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //AppBar
+      appBar: AppBar(
+        title: Text("Task App"),
+        backgroundColor: Colors.orange,
+      ),
+      body: Container(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      //floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          print("Pressionado");
+        },
+        icon: Icon(Icons.add_shopping_cart),
+        label: Text("Adicionar"),
+        /*shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        */),
+        //child: Icon(Icons.add),
+        backgroundColor: Colors.orange,
+        //elevation: 6, - Valor padrao da sombra
+        //mini: true, - Tamanho mini
+      ),
+      bottomNavigationBar: BottomAppBar(
+        //shape: CircularNotchedRectangle(),
+        child: Row(
+          children: [IconButton(icon: Icon(Icons.menu), onPressed: () {})],
+        ),
+      ),
+    );
+  }
+}
