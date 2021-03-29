@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
       _tarefas.add(tarefa);
     });
     _salvarArquivos();
+    //Limpando o textField
     _controllerTarefa.text = "";
   }
 
@@ -142,10 +143,20 @@ class _HomeState extends State<Home> {
             child: Container(
               child: ListView.builder(
                   itemBuilder: (context, index) {
+                    return CheckboxListTile(
+                      title: Text(_tarefas[index]["titulo"]),
+                      value: false, //estado do checkbox
+                      onChanged: (valorAlterado) {
+                        print("Status: " + valorAlterado.toString());
+                      },
+                    );
+
+                    /*
                     //Retorna numa listTitle
                     return ListTile(
                       title: Text(_tarefas[index]["titulo"]),
                     );
+                  */
                   },
                   itemCount: _tarefas.length),
             ),
