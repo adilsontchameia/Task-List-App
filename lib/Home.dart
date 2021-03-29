@@ -81,6 +81,33 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Widget criarItemLista(context, index) {
+    //Key - nome da tarefa
+    final item = _tarefas[index];
+    return Dismissible(
+      key: Key(item),
+      child: CheckboxListTile(
+        title: Text(_tarefas[index]["titulo"]),
+        value: _tarefas[index]["realizada"], //estado do checkbox
+        onChanged: (valorAlterado) {
+          //print("Status: " + valorAlterado.toString());
+          //Atualizar estado do checkbox
+          setState(() {
+            _tarefas[index]["realizada"] = valorAlterado;
+            _salvarArquivos();
+          });
+        },
+      ),
+    );
+
+    /*
+ //Retorna numa listTitle
+ return ListTile(
+title: Text(_tarefas[index]["titulo"]),
+ );
+*/
+  }
+
   @override
   Widget build(BuildContext context) {
     //Iniciando a lista a iniciar o app
@@ -142,28 +169,9 @@ class _HomeState extends State<Home> {
           Expanded(
             child: Container(
               child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return CheckboxListTile(
-                      title: Text(_tarefas[index]["titulo"]),
-                      value: _tarefas[index]["realizada"], //estado do checkbox
-                      onChanged: (valorAlterado) {
-                        //print("Status: " + valorAlterado.toString());
-                        //Atualizar estado do checkbox
-                        setState(() {
-                          _tarefas[index]["realizada"] = valorAlterado;
-                          _salvarArquivos();
-                        });
-                      },
-                    );
-
-                    /*
-                    //Retorna numa listTitle
-                    return ListTile(
-                      title: Text(_tarefas[index]["titulo"]),
-                    );
-                  */
-                  },
-                  itemCount: _tarefas.length),
+                itemBuilder: criarItemLista,
+                itemCount: _tarefas.length,
+              ),
             ),
           ),
         ],
