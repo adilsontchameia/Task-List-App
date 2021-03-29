@@ -22,7 +22,8 @@ class _HomeState extends State<Home> {
   //Tem que ser ansicrona, porque nao se sabe quanto demorara para efetuar a consulta
 
   //Metodo para nos retornar o File
-  _getFile() async {
+  //Vai ser retornado no futuro
+  Future<File> _getFile() async {
     //Local que queremos salvar, recuperar, remover
     final diretorio = await getApplicationDocumentsDirectory();
     //Definir o nome do diretorio
@@ -43,6 +44,23 @@ class _HomeState extends State<Home> {
     //Definir o que salvar
     arquivo.writeAsString(dados);
     print("Caminho: " + dados);
+  }
+
+  _lerArquivos() async {
+    try {
+      //Recuperando o diretorio
+      final arquivo = await _getFile();
+     return arquivo.readAsString();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //Iniciar a leitura antes de iniciar propriamente o app
+  @override
+  void initState() {
+    _lerArquivos();
+    super.initState();
   }
 
   @override
