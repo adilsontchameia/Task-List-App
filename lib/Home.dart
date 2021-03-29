@@ -39,7 +39,12 @@ class _HomeState extends State<Home> {
     tarefa["titulo"] = textoDigitado;
     //Booleano para verificarmos se concluimos
     tarefa["realizada"] = false;
-    _tarefas.add(tarefa);
+    //Atualizar a lista de tarefas
+    setState(() {
+      _tarefas.add(tarefa);
+    });
+    _salvarArquivos();
+    _controllerTarefa.text = "";
   }
 
   _salvarArquivos() async {
@@ -116,7 +121,10 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      _salvarTarefa();
+                      Navigator.pop(context);
+                    },
                     child: Text(
                       "Salvar",
                       style: TextStyle(color: Colors.orange),
