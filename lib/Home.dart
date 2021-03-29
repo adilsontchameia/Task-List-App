@@ -50,23 +50,30 @@ class _HomeState extends State<Home> {
     try {
       //Recuperando o diretorio
       final arquivo = await _getFile();
-     return arquivo.readAsString();
+      return arquivo.readAsString();
     } catch (e) {
-      return null;
+      e.toString();
+      print(e);
     }
   }
 
   //Iniciar a leitura antes de iniciar propriamente o app
   @override
   void initState() {
-    _lerArquivos();
     super.initState();
+    _lerArquivos().then((dados) {
+      //Configurar a lista
+      setState(() {
+        _tarefas = json.decode(dados);
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     //Iniciando a lista a iniciar o app
-    _salvarArquivos();
+    //_salvarArquivos();
+    print("Itens Salvos: " + _tarefas.toString());
     return Scaffold(
       //AppBar
       appBar: AppBar(
@@ -121,7 +128,7 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) {
                     //Retorna numa listTitle
                     return ListTile(
-                      title: Text(_tarefas[index]),
+                      title: Text(_tarefas[index]["titulo"]),
                     );
                   },
                   itemCount: _tarefas.length),
